@@ -5,6 +5,7 @@ import 'package:ikutan/controller/auth_controller.dart';
 import 'package:ikutan/core/routes.dart';
 import 'package:ikutan/utils/const.dart';
 import 'package:ikutan/utils/helper.dart';
+import 'package:ikutan/utils/validator.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -31,6 +32,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  validator: Validator.validateEmail,
                   controller: _controller.emailController,
                   decoration: InputDecoration(
                     labelText: "Email",
@@ -44,6 +46,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 Obx(
                   () => TextFormField(
+                    validator: Validator.validatePassword,
                     controller: _controller.passwordController,
                     obscureText: _controller.isObscure.value,
                     decoration: InputDecoration(
@@ -66,14 +69,16 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Obx(
-                  () => ElevatedButton(
-                    onPressed: () {
-                      _controller.isLoading.value ? null : _controller.login();
-                    },
-                    child: const Text("Login"),
-                  ),
-                ),
+                Obx(() {
+                  final isLoading =
+                      _controller.isLoading.value; // read here, inside Obx
+                  return ElevatedButton(
+                    onPressed: isLoading ? null : _controller.login,
+                    child: isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text("Login"),
+                  );
+                }),
                 const SizedBox(height: 20),
                 RichText(
                   text: TextSpan(
