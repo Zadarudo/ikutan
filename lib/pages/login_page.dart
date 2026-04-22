@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
                         text: "Register",
                         style: TextStyle(color: Colors.blue),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.toNamed(AppRoutes.register),
+                          ..onTap = () => Get.offNamed(AppRoutes.register),
                         // Handle navigation to register page here,
                         // Add gesture recognizer for navigation to register page
                       ),

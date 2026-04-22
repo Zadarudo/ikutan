@@ -5,6 +5,7 @@ import 'package:ikutan/pages/nav/events_tab.dart';
 import 'package:ikutan/pages/nav/main_tab.dart';
 import 'package:ikutan/pages/nav/my_tickets_tab.dart';
 import 'package:ikutan/pages/nav/profile_tab.dart';
+import 'package:ikutan/pages/nav/scan_tab.dart';
 import 'package:ikutan/services/auth_service.dart';
 
 class NavController extends GetxController {
@@ -16,22 +17,23 @@ class NavController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    final NavItem roleBasedNav = _authServices.user.value!.role == 'attendee'
-        ? NavItem(
-            label: 'My Tickets',
-            icon: Icon(Icons.confirmation_num),
-            screen: MyTicketsTab(),
-          )
-        : NavItem(
-            label: 'Events',
-            icon: Icon(Icons.campaign),
-            screen: EventsTab(),
-          );
-    navItem = [
-      NavItem(label: 'Home', icon: Icon(Icons.home), screen: MainTab()),
-      roleBasedNav,
-      NavItem(label: 'Profile', icon: Icon(Icons.person), screen: ProfileTab()),
-    ];
+    final role = _authServices.user.value?.role;
+
+    if (role == 'attendee') {
+      navItem = [
+        NavItem(label: 'Home', icon: const Icon(Icons.home), screen: const MainTab()),
+        NavItem(label: 'My Tickets', icon: const Icon(Icons.confirmation_num), screen: const MyTicketsTab()),
+        NavItem(label: 'Profile', icon: const Icon(Icons.person), screen: ProfileTab()),
+      ];
+    } else {
+      // admin or organizer
+      navItem = [
+        NavItem(label: 'Home', icon: const Icon(Icons.home), screen: const MainTab()),
+        NavItem(label: 'Events', icon: const Icon(Icons.campaign), screen: const EventsTab()),
+        NavItem(label: 'Scan', icon: const Icon(Icons.qr_code_scanner), screen: const ScanTab()),
+        NavItem(label: 'Profile', icon: const Icon(Icons.person), screen: ProfileTab()),
+      ];
+    }
   }
 
   void changeIndex(int index) {

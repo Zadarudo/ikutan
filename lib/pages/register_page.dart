@@ -150,7 +150,7 @@ class RegisterPage extends StatelessWidget {
                             const TextStyle(color: Colors.blue),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () =>
-                              Get.toNamed(AppRoutes.login),
+                              Get.offNamed(AppRoutes.login),
                       ),
                     ],
                   ),

@@ -19,11 +19,16 @@ class HomePages extends StatelessWidget {
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           currentIndex: _navController.currentIndex.value,
-          onTap: (value) {
-            _navController.changeIndex(value);
-          },
+          onTap: (value) => _navController.changeIndex(value),
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.deepPurpleAccent,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: const Color(0xFF1E1E1E),
           items: _navController.navItem
-              .map((e) => BottomNavigationBarItem(icon: e.icon, label: e.label))
+              .map((e) => BottomNavigationBarItem(
+                    icon: e.icon,
+                    label: e.label,
+                  ))
               .toList(),
         ),
       ),
